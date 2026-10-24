@@ -1,0 +1,25 @@
+name: CD
+on:
+  push:
+    branches:
+      - dev
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  open-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open dev to main pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "$(gh pr list --base main --head dev --state open --json number --jq 'length')" -eq 0 ]; then
+            gh pr create \
+              --base main \
+              --head dev \
+              --title "Merge dev into main" \
+              --body "Automatically opened after a push to the dev branch."
+          else
+            echo "An open dev to main pull request already exists."
+          fi
