@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sklearn.ensemble import IsolationForest
 
 app = FastAPI(title="KPI Anomaly detection API")
@@ -13,7 +13,7 @@ class KPI_record(BaseModel):
     
 class KPI_batch(BaseModel):
     records : list[KPI_record]
-
+    contamination : float=Field(default=0.1,gt=0,le=0.5)
 
 
 
@@ -43,7 +43,7 @@ def detect_anomalies(batch: KPI_batch):
         [record.revenue, record.orders,record.conversion_rate]
         for record in batch.records
     ]
-    model = IsolationForest(contamination=0.1, random_state=42)
+    model = IsolationForest(contamination = batch.contamination, random_state=42)
     
     predictions = model.fit_predict(features)
     
@@ -59,4 +59,4 @@ def detect_anomalies(batch: KPI_batch):
                    batch.records, predictions, scores, strict= True
                )]
     
-    return {"method":"isolation_forest","results": results}
+    return {"method":"isolation_forest","contamination_used": batch.contamination,"results": results}
