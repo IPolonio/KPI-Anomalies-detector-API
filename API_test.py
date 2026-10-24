@@ -30,3 +30,13 @@ def test_isolation_forest_detects():
     )
     assert campaign_spike["is_anomaly"] is True
     assert sum(item["is_anomaly"] for item in results) == 1
+    
+def test_configurable_contamination_changes_anomaly_count():
+     payload = {**Sample, "contamination": 0.2}
+     response = client.post("/detect", json=payload)
+
+     assert response.status_code == 200
+     assert response.json()["contamination_used"] == 0.2
+     assert sum(
+        item["is_anomaly"] for item in response.json()["results"]
+    ) == 2
