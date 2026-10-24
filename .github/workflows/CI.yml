@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Configura uv oficialmente en el pipeline
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-lock-file: "uv.lock"
+
+      # 2. Instala la versión de Python y sincroniza tus dependencias al instante
+      - name: Install Python and dependencies
+        run: |
+          uv python install 3.13
+          uv sync --frozen --no-dev
+
+      # 3. Corre tus pruebas con el entorno virtual gestionado por uv
+      - name: Run tests
+        run: uv run pytest -q
