@@ -1,0 +1,7 @@
+.venv
+__pycache__
+.pytest_cache
+.git
+.github
+test_main.py
+sample-request.json
