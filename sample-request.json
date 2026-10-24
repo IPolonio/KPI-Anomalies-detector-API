@@ -1,0 +1,14 @@
+{
+  "records": [
+    {"label": "day-1", "revenue": 1000, "orders": 100, "conversion_rate": 0.0300},
+    {"label": "day-2", "revenue": 1020, "orders": 98, "conversion_rate": 0.0310},
+    {"label": "day-3", "revenue": 980, "orders": 103, "conversion_rate": 0.0290},
+    {"label": "day-4", "revenue": 1010, "orders": 101, "conversion_rate": 0.0300},
+    {"label": "day-5", "revenue": 995, "orders": 99, "conversion_rate": 0.0320},
+    {"label": "day-6", "revenue": 1030, "orders": 104, "conversion_rate": 0.0280},
+    {"label": "day-7", "revenue": 970, "orders": 97, "conversion_rate": 0.0310},
+    {"label": "day-8", "revenue": 1040, "orders": 102, "conversion_rate": 0.0290},
+    {"label": "day-9", "revenue": 990, "orders": 100, "conversion_rate": 0.0305},
+    {"label": "campaign-spike", "revenue": 4000, "orders": 20, "conversion_rate": 0.0300}
+  ]
+}
